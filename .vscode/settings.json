@@ -1,0 +1,12 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "\\\\wsl.localhost\\Ubuntu-20.04\\home\\john\\Python_course\\Django_Agenda\\db.sqlite3",
+            "name": "admin",
+            "group": "admin"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}
