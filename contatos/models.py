@@ -22,7 +22,9 @@ class Contato(models.Model):
     telefone = models.CharField(max_length=255)
     email = models.CharField(max_length=255, blank=True)
     data_criacao = models.DateTimeField(default= timezone.now)
-    descriacao = models.TextField(blank=True)
+    descricao = models.TextField(blank=True)
     categoria = models.ForeignKey(Categoria, on_delete=models.DO_NOTHING)
+    mostrar = models.BooleanField(default=True)
+    photo = models.ImageField(blank=True, upload_to='photos/')
     def __str__(self) :
         return self.nome
