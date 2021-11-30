@@ -1,8 +1,10 @@
+from django.contrib.auth import models
 from django.shortcuts import redirect, render
 from django.contrib import messages,auth
 from django.core.validators import validate_email
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from .models import FormConato
 
 # Create your views here.
 
@@ -29,7 +31,8 @@ def login(request):
         
 
 def logout(request):
-    return render (request,'accounts/logout.html')
+    auth.logout(request)
+    return redirect('dashboard')
 
 def register(request):
 
@@ -73,4 +76,17 @@ def register(request):
 
 @login_required(redirect_field_name='login')
 def dashboard(request):
-    return render (request,'accounts/dashboard.html')
+    if request.method != 'POST':
+        form = FormConato()
+        return render(request,'accounts/dashboard.html', { 'form':form } )
+    
+    form = FormConato(request.POST, request.FILES)
+
+    if not form.is_valid():
+        messages.error(request, 'Erro ao enviar Formulario')
+        form = FormConato(request.POST)
+        return render(request,'accounts/dashboard.html', { 'form':form } )
+    
+    form.save()
+    messages.success(request, 'Ramal Adicionado com sucesso')
+    return redirect('dashboard')
